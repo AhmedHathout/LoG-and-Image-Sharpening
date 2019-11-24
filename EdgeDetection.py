@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import matplotlib.pyplot as plt
 import math
 import numpy as np
@@ -64,23 +58,22 @@ def zeroCrossing(second_derivative, first_derivative):
 
 def normalize(numpy_image):
     (n, m) = numpy_image.shape
-    max = np.max(numpy_image)
     normalized_image = np.zeros(numpy_image.shape)
     for i in range(n):
         for j in range(m):
-            normalized_image[i][j] = numpy_image[i][j]/max
+            normalized_image[i][j] = numpy_image[i][j]/255
     return normalized_image
 
 def prewitt(numpy_image, threshold):
     h1 = [[1,1,1],[0,0,0],[-1,-1,1]]
     h2 = [[-1,0,1],[-1,0,1],[-1,0,1]]
+    numpy_image = normalize(numpy_image)
     h1_image = convolute(numpy_image, h1)
     h2_image = convolute(numpy_image, h2)
     edge_image = np.zeros(numpy_image.shape)
     for i in range(h1_image.shape[0]):
         for j in range(h1_image.shape[1]):
             edge_image[i][j] = math.sqrt(h1_image[i][j]**2 + h2_image[i][j]**2)
-    edge_image = normalize(edge_image)
     for i in range(edge_image.shape[0]):
         for j in range(edge_image.shape[1]):
             if(edge_image[i][j] > threshold):
@@ -110,9 +103,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
 
