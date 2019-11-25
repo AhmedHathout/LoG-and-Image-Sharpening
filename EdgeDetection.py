@@ -65,7 +65,7 @@ def normalize(numpy_image):
     return normalized_image
 
 def prewitt(numpy_image, threshold):
-    h1 = [[1,1,1],[0,0,0],[-1,-1,1]]
+    h1 = [[1,1,1],[0,0,0],[-1,-1,-1]]
     h2 = [[-1,0,1],[-1,0,1],[-1,0,1]]
     numpy_image = normalize(numpy_image)
     h1_image = convolute(numpy_image, h1)
