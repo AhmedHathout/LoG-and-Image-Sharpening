@@ -43,7 +43,7 @@ def add_2_images(first_image, second_image):
                                                           + str(len(first_image)) \
                                                           + ", " + str(len(second_image))
 
-    new_image = first_image.copy()
+    new_image = np.zeros(shape=first_image.shape)
     if len(first_image) != len(second_image):
         raise AssertionError(error_message(len(first_image), len(second_image)))
     for i in range(len(first_image)):
@@ -52,6 +52,8 @@ def add_2_images(first_image, second_image):
 
         for j in range(len(first_image[i])):
             new_image[i][j] = first_image[i][j] + second_image[i][j]
+            if new_image[i][j] > 255:
+                new_image[i][j] = 255
 
     return new_image
 
@@ -59,6 +61,7 @@ def sharpen(numpy_image, kernel, intensity_scaling_factor):
     convoluted_image = convolute(numpy_image, kernel)
     scaled_image = scale_intensities(convoluted_image, intensity_scaling_factor)
     sharpened_image = add_2_images(numpy_image, scaled_image)
+    Image.fromarray(add_2_images(numpy_image, convoluted_image)).convert("L").save("Sharpened2.jpg")
 
     return Image.fromarray(sharpened_image).convert("L")
 
